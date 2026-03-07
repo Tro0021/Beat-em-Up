@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cwqxqabxgowmn" path="res://scenes/characters/character.gd" id="1_1bdar"]
 [ext_resource type="Texture2D" uid="uid://15ughjpidl08" path="res://assets/art/characters/shadow.png" id="1_x31xa"]
+[ext_resource type="PackedScene" uid="uid://b4405ferjkhsw" path="res://scenes/colliders/damage_emitter.tscn" id="3_e22cc"]
 
 [node name="Character" type="CharacterBody2D" unique_id=1851513608]
 collision_layer = 0
@@ -19,3 +20,7 @@ offset = Vector2(-7, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2046045032]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1061706764]
+
+[node name="DamageEmitter" parent="." unique_id=1344366015 instance=ExtResource("3_e22cc")]
+
+[editable path="DamageEmitter"]
