@@ -9,7 +9,6 @@
 collision_layer = 0
 collision_mask = 0
 script = ExtResource("1_1bdar")
-speed = 5.0
 
 [node name="ShadowSprite" type="Sprite2D" parent="." unique_id=753053671]
 texture = ExtResource("1_x31xa")

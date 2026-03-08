@@ -1,4 +1,6 @@
 class_name DamageReceiver
 extends Area2D
 
-signal damage_received(damage : int)
+enum HITtype {NORMAL, KNOCKBACK, POWER}
+
+signal damage_received(damage : int, direction : Vector2, hit_type : HITtype)

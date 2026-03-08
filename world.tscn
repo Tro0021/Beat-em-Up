@@ -36,7 +36,7 @@ shape = SubResource("RectangleShape2D_tlwt5")
 y_sort_enabled = true
 
 [node name="Player" parent="ActorsContainer" unique_id=1851513608 instance=ExtResource("2_fj7yv")]
-position = Vector2(13, 38)
+position = Vector2(35, 36)
 
 [node name="Barrel" parent="ActorsContainer" unique_id=514616866 instance=ExtResource("4_aqk2v")]
 position = Vector2(56, 46)
@@ -47,4 +47,16 @@ player = NodePath("../Player")
 
 [node name="BasicEnemy2" parent="ActorsContainer" unique_id=259494406 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(51, 59)
+player = NodePath("../Player")
+
+[node name="BasicEnemy3" parent="ActorsContainer" unique_id=297843863 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(12, 54)
+player = NodePath("../Player")
+
+[node name="BasicEnemy4" parent="ActorsContainer" unique_id=1227162468 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(69, 38)
+player = NodePath("../Player")
+
+[node name="BasicEnemy5" parent="ActorsContainer" unique_id=359820603 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
+position = Vector2(29, 69)
 player = NodePath("../Player")
