@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const GRAVITY := 600.0
 
+@export var can_respawn : bool
 @export var max_health : int
 @export var damage : int
 @export var jump_intensity : float
@@ -17,9 +18,9 @@ const GRAVITY := 600.0
 @onready var damage_emitter: Area2D = $DamageEmitter
 @onready var damage_receiver: DamageReceiver = $DamageReceiver
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH}
 
-var anim_map := {
+var anim_map : Dictionary = {
 	State.IDLE: "idle",
 	State.WALK: "walk",
 	State.ATTACK: "punch",
@@ -30,6 +31,7 @@ var anim_map := {
 	State.HURT: "hurt",
 	State.FALL: "fall",
 	State.GROUNDED: "grounded",
+	State.DEATH: "grounded"
 }
 
 var current_health := 0
@@ -49,6 +51,7 @@ func _process(delta: float) -> void:
 	handle_animation()
 	handle_air_time(delta)
 	handle_grounded()
+	handle_death(delta)
 	flip_sprites()
 	character_sprite.position = Vector2.UP * height
 	collision_shape_2d.disabled = state == State.GROUNDED
@@ -59,7 +62,16 @@ func handle_input() -> void:
 
 func handle_grounded() -> void:
 	if state == State.GROUNDED and (Time.get_ticks_msec() - time_since_grounded > duration_grounded):
-		state = State.LAND
+		if current_health == 0:
+			state = State.DEATH
+		else:
+			state = State.LAND
+
+func handle_death(delta) -> void:
+	if state == State.DEATH and not can_respawn:
+		modulate.a -= delta / 2.0
+		if modulate.a <= 0:
+			queue_free()
 
 func handle_movement():
 	if not can_move():
@@ -105,6 +117,9 @@ func can_jump() -> bool:
 func can_jumpkick() -> bool:
 	return state == State.JUMP
 
+func can_get_hurt() -> bool:
+	return [State.IDLE, State.WALK, State.TAKEOFF, State.JUMP, State.LAND].has(state)
+
 func on_action_complete() -> void:
 	state = State.IDLE
 
@@ -116,15 +131,16 @@ func on_land_complete() -> void:
 	state = State.IDLE
 
 func on_receive_damage(amount: int, direction: Vector2, hit_type: DamageReceiver.HITtype) -> void:
-	current_health = clamp(current_health - amount, 0, max_health)
-	if current_health == 0 or hit_type == DamageReceiver.HITtype.KNOCKBACK:
-		state = State.FALL
-		height_speed = knockdown_intensity
-	else:
-		state = State.HURT
-	if current_health <= 0:
-		queue_free()
-	velocity = direction * knockback_intensity
+	if can_get_hurt():
+		current_health = clamp(current_health - amount, 0, max_health)
+
+		if current_health == 0 or hit_type == DamageReceiver.HITtype.KNOCKBACK:
+			state = State.FALL
+			height_speed = knockdown_intensity
+		else:
+			state = State.HURT
+
+		velocity = direction * knockback_intensity
 
 func on_emit_damage(receiver : DamageReceiver) -> void:
 	var hit_type := DamageReceiver.HITtype.NORMAL
