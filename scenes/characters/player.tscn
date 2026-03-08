@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://ds0vtxdlx53kn"]
 
 [ext_resource type="PackedScene" uid="uid://bhqwyn0vjc26d" path="res://scenes/characters/character.tscn" id="1_rp718"]
+[ext_resource type="Script" uid="uid://c2s2wf2c254ca" path="res://scenes/characters/player.gd" id="2_76oj4"]
 [ext_resource type="Texture2D" uid="uid://dx0lttixvve2n" path="res://assets/art/characters/player.png" id="2_yewv4"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
+radius = 3.0
+height = 14.0
 
 [sub_resource type="Animation" id="Animation_yewv4"]
 length = 0.001
@@ -48,6 +53,96 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_kqtwu"]
+resource_name = "jump"
+length = 0.1
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [62]
+}
+
+[sub_resource type="Animation" id="Animation_qgnko"]
+resource_name = "jumpkick"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [63]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_6eyoc"]
+resource_name = "land"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [60]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_land_complete"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_atpat"]
 resource_name = "punch"
 length = 0.15
@@ -91,6 +186,37 @@ tracks/2/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_eojnx"]
+resource_name = "takeoff"
+length = 0.05
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [61]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.05),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_takeoff_complete"
+}]
+}
+
 [sub_resource type="Animation" id="Animation_dyp2m"]
 resource_name = "walk"
 length = 0.8
@@ -112,18 +238,27 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_yewv4"),
 &"idle": SubResource("Animation_76oj4"),
+&"jump": SubResource("Animation_kqtwu"),
+&"jumpkick": SubResource("Animation_qgnko"),
+&"land": SubResource("Animation_6eyoc"),
 &"punch": SubResource("Animation_atpat"),
+&"takeoff": SubResource("Animation_eojnx"),
 &"walk": SubResource("Animation_dyp2m")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yewv4"]
 size = Vector2(10, 6)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76oj4"]
+size = Vector2(8, 8)
+
 [node name="Player" unique_id=1851513608 instance=ExtResource("1_rp718")]
-collision_layer = 2
+collision_layer = 6
 collision_mask = 9
-health = 30
+script = ExtResource("2_76oj4")
+max_health = 30
 damage = 4
+jump_intensity = 150.0
 speed = 35.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1423007912]
@@ -133,15 +268,28 @@ offset = Vector2(-24, -48)
 hframes = 10
 vframes = 10
 
+[node name="CollisionShape2D" parent="." index="2" unique_id=2046045032]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_yewv4")
+
 [node name="AnimationPlayer" parent="." index="3" unique_id=1061706764]
 libraries/ = SubResource("AnimationLibrary_dyp2m")
 autoplay = &"idle"
 
 [node name="DamageEmitter" parent="." index="4" unique_id=1344366015]
-position = Vector2(10, -12)
+position = Vector2(0, -12)
 collision_mask = 96
 
 [node name="CollisionShape2D" parent="DamageEmitter" index="0" unique_id=2059426294]
+position = Vector2(10, 0)
 shape = SubResource("RectangleShape2D_yewv4")
 
+[node name="DamageReceiver" parent="." index="5" unique_id=1953742961]
+collision_layer = 16
+
+[node name="CollisionShape2D" parent="DamageReceiver" index="0" unique_id=1623045419]
+position = Vector2(1, -17)
+shape = SubResource("RectangleShape2D_76oj4")
+
 [editable path="DamageEmitter"]
+[editable path="DamageReceiver"]
