@@ -20,14 +20,20 @@ position = Vector2(50, 32)
 [node name="InvisibleWalls" type="Node2D" parent="Camera" unique_id=1450202878]
 position = Vector2(-50, -32)
 
-[node name="LeftWall" type="StaticBody2D" parent="Camera/InvisibleWalls" unique_id=20959934]
+[node name="LeftWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls" unique_id=2059276622]
 position = Vector2(0, 32)
+collision_layer = 128
+collision_mask = 0
+sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/LeftWall" unique_id=796970476]
 shape = SubResource("RectangleShape2D_tlwt5")
 
-[node name="RightWall" type="StaticBody2D" parent="Camera/InvisibleWalls" unique_id=685773093]
+[node name="RightWall" type="AnimatableBody2D" parent="Camera/InvisibleWalls" unique_id=1912249245]
 position = Vector2(100, 32)
+collision_layer = 128
+collision_mask = 0
+sync_to_physics = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera/InvisibleWalls/RightWall" unique_id=16990222]
 shape = SubResource("RectangleShape2D_tlwt5")
@@ -58,5 +64,5 @@ position = Vector2(69, 38)
 player = NodePath("../Player")
 
 [node name="BasicEnemy5" parent="ActorsContainer" unique_id=359820603 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(29, 69)
+position = Vector2(84, 43)
 player = NodePath("../Player")

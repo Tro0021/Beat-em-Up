@@ -15,7 +15,7 @@ var state := State.IDLE
 var velocity := Vector2.ZERO
 
 func _ready() -> void:
-	damage_receiver.damage_received.connect(on_receive_damage.bind())
+	damage_receiver.damage_received.connect(on_receive_damage)
 
 func _process(delta: float) -> void:
 	position += velocity * delta

@@ -22,6 +22,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DamageEmitter:monitoring")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_6fn6m"]
 resource_name = "fall"
@@ -39,6 +63,47 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [51]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_enhbp"]
+resource_name = "fly"
+length = 0.1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterSprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [50]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollateralDamageEmitter:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_7mf7s"]
@@ -61,7 +126,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_kcdp1"]
 resource_name = "hurt"
-length = 0.3
+length = 0.15
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -70,7 +135,7 @@ tracks/0/path = NodePath("CharacterSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2),
+"times": PackedFloat32Array(0, 0.05, 0.1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [40, 41, 42]
@@ -82,7 +147,7 @@ tracks/1/path = NodePath(".")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.3),
+"times": PackedFloat32Array(0.15),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -161,6 +226,7 @@ tracks/0/keys = {
 _data = {
 &"RESET": SubResource("Animation_xsmbu"),
 &"fall": SubResource("Animation_6fn6m"),
+&"fly": SubResource("Animation_enhbp"),
 &"grounded": SubResource("Animation_7mf7s"),
 &"hurt": SubResource("Animation_kcdp1"),
 &"idle": SubResource("Animation_dwul0"),
@@ -174,6 +240,9 @@ size = Vector2(6, 6)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mf7s"]
 size = Vector2(10, 10)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dwul0"]
+size = Vector2(6, 6)
+
 [node name="BasicEnemy" unique_id=1851513608 instance=ExtResource("1_xsmbu")]
 collision_layer = 4
 collision_mask = 12
@@ -181,9 +250,10 @@ script = ExtResource("2_wh1i7")
 max_health = 20
 damage = 2
 speed = 25.0
-knockback_intensity = 40.0
+knockback_intensity = 10.0
 knockdown_intensity = 70.0
 duration_grounded = 1000.0
+flight_speed = 100.0
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1423007912]
 texture = ExtResource("2_dwul0")
@@ -211,5 +281,13 @@ collision_layer = 32
 position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_7mf7s")
 
+[node name="CollateralDamageEmitter" parent="." index="6" unique_id=198549063]
+collision_mask = 160
+
+[node name="CollisionShape2D" parent="CollateralDamageEmitter" index="0" unique_id=2059426294]
+position = Vector2(0, -11)
+shape = SubResource("RectangleShape2D_dwul0")
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
+[editable path="CollateralDamageEmitter"]
