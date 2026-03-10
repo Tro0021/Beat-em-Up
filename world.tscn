@@ -43,6 +43,7 @@ y_sort_enabled = true
 
 [node name="Player" parent="ActorsContainer" unique_id=1851513608 instance=ExtResource("2_fj7yv")]
 position = Vector2(35, 36)
+has_knife = true
 
 [node name="Barrel" parent="ActorsContainer" unique_id=514616866 instance=ExtResource("4_aqk2v")]
 position = Vector2(56, 46)
@@ -50,19 +51,5 @@ position = Vector2(56, 46)
 [node name="BasicEnemy" parent="ActorsContainer" unique_id=759881957 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(82, 58)
 player = NodePath("../Player")
-
-[node name="BasicEnemy2" parent="ActorsContainer" unique_id=259494406 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(51, 59)
-player = NodePath("../Player")
-
-[node name="BasicEnemy3" parent="ActorsContainer" unique_id=297843863 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(12, 54)
-player = NodePath("../Player")
-
-[node name="BasicEnemy4" parent="ActorsContainer" unique_id=1227162468 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(69, 38)
-player = NodePath("../Player")
-
-[node name="BasicEnemy5" parent="ActorsContainer" unique_id=359820603 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
-position = Vector2(84, 43)
-player = NodePath("../Player")
+can_respawn_knives = true
+duration_between_knives_respawn = 2000

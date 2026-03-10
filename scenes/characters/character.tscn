@@ -27,6 +27,12 @@ offset = Vector2(-7, 0)
 
 [node name="CollateralDamageEmitter" parent="." unique_id=198549063 instance=ExtResource("3_e22cc")]
 
+[node name="KnifeSprite" type="Sprite2D" parent="." unique_id=916043014]
+
+[node name="ProjectileAim" type="RayCast2D" parent="." unique_id=772994023]
+target_position = Vector2(100, 0)
+collision_mask = 0
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]
