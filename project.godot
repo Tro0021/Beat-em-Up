@@ -87,6 +87,7 @@ jump={
 2d_physics/layer_6="EnemyDamageReceiver"
 2d_physics/layer_7="DestructibleDamageReceiver"
 2d_physics/layer_8="InvisibleWalls"
+2d_physics/layer_9="Collectibles"
 
 [physics]
 

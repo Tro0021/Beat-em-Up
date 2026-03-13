@@ -1,3 +1,4 @@
+
 class_name BasicEnemy
 extends Character
 
@@ -21,7 +22,7 @@ func _ready() -> void:
 
 func handle_input() -> void:
 	if player != null and can_move():
-		if can_respawn_knives:
+		if can_respawn_knives or has_knife:
 			goto_range_position()
 		else:
 			goto_melee_position()
@@ -51,20 +52,23 @@ func goto_range_position() -> void:
 		time_since_last_range_attack = Time.get_ticks_msec()
 
 func goto_melee_position() -> void:
-	if player != null and can_move():
-		
-		if player_slot == null:
-			player_slot = player.reserve_slot(self)
-		
+	if can_pickup_collectible():
+		state = State.PICKUP
 		if player_slot != null:
-			var direction := (player_slot.global_position - global_position).normalized()
-			if is_player_within_range():
-				velocity = Vector2.ZERO
-				if can_attack():
-					state = State.PREP_ATTACK
-					time_since_prep_melee_attack = Time.get_ticks_msec()
-			else:
-					velocity = direction * speed
+			player.free_slot(self)
+		
+	elif player_slot == null:
+		player_slot = player.reserve_slot(self)
+		
+	if player_slot != null:
+		var direction := (player_slot.global_position - global_position).normalized()
+		if is_player_within_range():
+			velocity = Vector2.ZERO
+			if can_attack():
+				state = State.PREP_ATTACK
+				time_since_prep_melee_attack = Time.get_ticks_msec()
+		else:
+			velocity = direction * speed
 
 func handle_prep_attack() -> void:
 	if state == State.PREP_ATTACK and (Time.get_ticks_msec() - time_since_prep_melee_attack > duration_prep_melee_attack):
