@@ -41,6 +41,8 @@ collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Collectiblesensor" unique_id=1658578304]
 
+[node name="GunSprite" type="Sprite2D" parent="." unique_id=2146660297]
+
 [editable path="DamageEmitter"]
 [editable path="DamageReceiver"]
 [editable path="CollateralDamageEmitter"]
