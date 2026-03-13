@@ -90,7 +90,7 @@ func can_throw() -> bool:
 	return super.can_attack()
 
 func set_heading() -> void:
-	if player == null:
+	if player == null or not can_move():
 		return
 	if position.x > player.position.x:
 		heading = Vector2.LEFT
