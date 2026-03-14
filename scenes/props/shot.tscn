@@ -10,3 +10,4 @@ colors = PackedColorArray(0, 0, 0, 1, 0.58001643, 0.5538386, 0.05823438, 1, 1, 1
 width = 1.0
 gradient = SubResource("Gradient_iq70w")
 script = ExtResource("1_6t3n6")
+duration_shot_across_screen = 200.0

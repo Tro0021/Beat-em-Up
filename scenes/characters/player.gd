@@ -7,6 +7,8 @@ func _ready() -> void:
 	super._ready()
 	anim_attacks = ["punch", "punch_alt", "kick", "roundkick"]
 
+
+
 func handle_input() -> void:
 	if can_move():
 		var direction := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -15,7 +17,11 @@ func handle_input() -> void:
 		if has_knife:
 			state = State.THROW
 		elif has_gun:
-			state = State.SHOOT
+			if ammo_left > 0:
+				shoot_gun()
+				ammo_left -= 1
+			else:
+				state = State.THROW
 		else:
 			if can_pickup_collectible():
 				state = State.PICKUP
@@ -28,6 +34,7 @@ func handle_input() -> void:
 					attack_combo_index = 0
 	if can_jump() and Input.is_action_just_pressed("jump"):
 		state = State.TAKEOFF
+		attack_combo_index = 0
 	if can_jumpkick() and Input.is_action_just_pressed("attack"):
 		state = State.JUMPKICK
 

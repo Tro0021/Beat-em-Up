@@ -718,6 +718,7 @@ duration_prep_melee_attack = 500
 duration_prep_range_attack = 500
 max_health = 20
 damage = 2
+damage_gunshot = 5
 speed = 25.0
 knockback_intensity = 10.0
 knockdown_intensity = 70.0

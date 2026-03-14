@@ -6,9 +6,8 @@
 [ext_resource type="Script" uid="uid://cviw72u5rtbvk" path="res://scenes/stage/actors_container.gd" id="3_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://eir62db4wqil" path="res://scenes/props/barrel.tscn" id="4_aqk2v"]
 [ext_resource type="PackedScene" uid="uid://bkfxhgnbx60ea" path="res://scenes/characters/basic_enemy.tscn" id="5_036b0"]
-[ext_resource type="PackedScene" uid="uid://bpt218qxbss3b" path="res://scenes/props/kinfe.tscn" id="6_dwbse"]
 [ext_resource type="PackedScene" uid="uid://bve460dpsk1qp" path="res://scenes/characters/goon_enemy.tscn" id="7_pkg7o"]
-[ext_resource type="PackedScene" uid="uid://drcs3hlbar38v" path="res://scenes/props/shot.tscn" id="9_ioo17"]
+[ext_resource type="PackedScene" uid="uid://besc7grc8x6qw" path="res://scenes/characters/thug_enemy.tscn" id="8_gbfbk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlwt5"]
 size = Vector2(6, 64)
@@ -48,27 +47,24 @@ script = ExtResource("3_gbfbk")
 
 [node name="Player" parent="ActorsContainer" unique_id=1851513608 instance=ExtResource("2_fj7yv")]
 position = Vector2(35, 36)
-has_knife = true
-has_gun = true
 
 [node name="Barrel" parent="ActorsContainer" unique_id=514616866 instance=ExtResource("4_aqk2v")]
 position = Vector2(139, 44)
+content_type = 2
 
 [node name="BasicEnemy" parent="ActorsContainer" unique_id=759881957 node_paths=PackedStringArray("player") instance=ExtResource("5_036b0")]
 position = Vector2(68, 59)
 player = NodePath("../Player")
 duration_between_knives_respawn = 2000
 
-[node name="Kinfe" parent="ActorsContainer" unique_id=1840765103 instance=ExtResource("6_dwbse")]
-position = Vector2(36, 54)
-
 [node name="GoonEnemy" parent="ActorsContainer" unique_id=1710422782 node_paths=PackedStringArray("player") instance=ExtResource("7_pkg7o")]
 position = Vector2(88, 36)
 player = NodePath("../Player")
 can_respawn_knives = false
-has_knife = false
+damage_gunshot = 0
 has_gun = true
+has_knife = false
 
-[node name="Shot" parent="ActorsContainer" unique_id=347719797 instance=ExtResource("9_ioo17")]
-position = Vector2(49, 37)
-points = PackedVector2Array(0, -14, 100, -14)
+[node name="ThugEnemy" parent="ActorsContainer" unique_id=705970097 node_paths=PackedStringArray("player") instance=ExtResource("8_gbfbk")]
+position = Vector2(12, 53)
+player = NodePath("../Player")
