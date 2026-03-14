@@ -1,13 +1,23 @@
 class_name Player
 extends "res://scenes/characters/character.gd"
 
+@export var max_duration_between_successful_hits : int
+
 @onready var enemy_slots: Array = $EnemySlots.get_children()
+
+var time_since_last_attack := Time.get_ticks_msec()
 
 func _ready() -> void:
 	super._ready()
 	anim_attacks = ["punch", "punch_alt", "kick", "roundkick"]
 
+func _process(delta: float) -> void:
+	super._process(delta)
+	process_time_between_combos()
 
+func process_time_between_combos() -> void:
+	if Time.get_ticks_msec() - time_since_last_attack > max_duration_between_successful_hits:
+		attack_combo_index = 0
 
 func handle_input() -> void:
 	if can_move():
@@ -28,6 +38,7 @@ func handle_input() -> void:
 			else:
 				state = State.ATTACK
 				if is_last_hit_successful:
+					time_since_last_attack = Time.get_ticks_msec()
 					attack_combo_index = (attack_combo_index + 1) % anim_attacks.size()
 					is_last_hit_successful = false
 				else:

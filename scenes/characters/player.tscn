@@ -908,6 +908,7 @@ size = Vector2(14, 3)
 collision_layer = 2
 collision_mask = 137
 script = ExtResource("2_76oj4")
+max_duration_between_successful_hits = 2000
 autodestroy = true
 can_respawn = true
 damage = 4
