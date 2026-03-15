@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bpt218qxbss3b"]
 
-[ext_resource type="PackedScene" uid="uid://ccbocmjs6buns" path="res://scenes/props/collectible.tscn" id="1_qd2ll"]
-[ext_resource type="Texture2D" uid="uid://43c53pb55s66" path="res://assets/art/props/knife.png" id="2_bk183"]
+[ext_resource type="PackedScene" uid="uid://ccbocmjs6buns" path="res://scenes/props/collectible.tscn" id="1_ucw37"]
+[ext_resource type="Texture2D" uid="uid://43c53pb55s66" path="res://assets/art/props/knife.png" id="2_0neuj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bk183"]
 
@@ -109,7 +109,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jdrqa"]
 size = Vector2(3, 3)
 
-[node name="Kinfe" unique_id=1840765103 instance=ExtResource("1_qd2ll")]
+[node name="Knife" unique_id=1840765103 instance=ExtResource("1_ucw37")]
 monitorable = true
 damage = 4
 speed = 100.0
@@ -121,7 +121,7 @@ shape = SubResource("RectangleShape2D_bk183")
 
 [node name="CollectibleSprite" parent="." index="1" unique_id=2002239385]
 position = Vector2(0, -8)
-texture = ExtResource("2_bk183")
+texture = ExtResource("2_0neuj")
 centered = false
 offset = Vector2(-8, -8)
 

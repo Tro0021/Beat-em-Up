@@ -45,7 +45,8 @@ func _process(delta: float) -> void:
 	damage_emitter.monitoring = state == State.FLY
 
 func handle_animation() -> void:
-	animation_player.play(anim_map[state])
+	if animation_player.current_animation != anim_map[state]:
+		animation_player.play(anim_map[state])
 
 func handle_fall(delta : float) -> void:
 	if state == State.FALL:

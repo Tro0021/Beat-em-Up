@@ -3,13 +3,21 @@
 [ext_resource type="PackedScene" uid="uid://cndlb2d7lx1o3" path="res://scenes/stage/stage.tscn" id="1_lluwt"]
 [ext_resource type="Texture2D" uid="uid://dmd0kyb3qklap" path="res://assets/art/backgrounds/street-background.png" id="2_5wvst"]
 [ext_resource type="PackedScene" uid="uid://f34yv1btnsyc" path="res://scenes/stage/checkpoint.tscn" id="3_j5gp6"]
+[ext_resource type="Texture2D" uid="uid://cu475fk3vm6gm" path="res://assets/art/props/garage-door-opened.png" id="3_w6ome"]
 [ext_resource type="PackedScene" uid="uid://bve460dpsk1qp" path="res://scenes/characters/goon_enemy.tscn" id="4_mslao"]
 [ext_resource type="PackedScene" uid="uid://besc7grc8x6qw" path="res://scenes/characters/thug_enemy.tscn" id="5_2j5k0"]
+[ext_resource type="PackedScene" uid="uid://eir62db4wqil" path="res://scenes/props/barrel.tscn" id="6_mslao"]
+[ext_resource type="PackedScene" uid="uid://bkfxhgnbx60ea" path="res://scenes/characters/basic_enemy.tscn" id="7_ea7xw"]
+[ext_resource type="PackedScene" uid="uid://c83wot5rk4053" path="res://scenes/props/door.tscn" id="8_ea7xw"]
 
 [node name="Stage-01-Streets" unique_id=1545117627 instance=ExtResource("1_lluwt")]
 
 [node name="MainBackgrounds" parent="Backgrounds" parent_id_path=PackedInt32Array(1246142803) index="0" unique_id=521823444]
 texture = ExtResource("2_5wvst")
+
+[node name="Sprite2D" type="Sprite2D" parent="Backgrounds" parent_id_path=PackedInt32Array(1246142803) index="1" unique_id=1948877025]
+position = Vector2(174, 16)
+texture = ExtResource("3_w6ome")
 
 [node name="Checkpoints" parent="." index="2" unique_id=2039556888]
 position = Vector2(150, 0)
@@ -17,7 +25,7 @@ position = Vector2(150, 0)
 [node name="Checkpoint" parent="Checkpoints" index="0" unique_id=1014506818 instance=ExtResource("3_j5gp6")]
 
 [node name="ThugEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="0" unique_id=1851513608 instance=ExtResource("5_2j5k0")]
-position = Vector2(113, 52)
+position = Vector2(47, -17)
 
 [node name="ThugEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="1" unique_id=2087371796 instance=ExtResource("5_2j5k0")]
 position = Vector2(-12, 40)
@@ -25,14 +33,21 @@ position = Vector2(-12, 40)
 [node name="GoonEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="2" unique_id=2142938996 instance=ExtResource("4_mslao")]
 position = Vector2(144, 67)
 
-[node name="GoonEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="3" unique_id=1827732681 instance=ExtResource("4_mslao")]
-position = Vector2(-30, 63)
+[node name="GoonEnemy3" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="3" unique_id=209780801 instance=ExtResource("4_mslao")]
+position = Vector2(144, 67)
+
+[node name="BasicEnemy" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="4" unique_id=1133224280 instance=ExtResource("7_ea7xw")]
+position = Vector2(29, 30)
+
+[node name="BasicEnemy2" parent="Checkpoints/Checkpoint/Enemies" parent_id_path=PackedInt32Array(1014506818, 905483792) index="5" unique_id=536176770 instance=ExtResource("7_ea7xw")]
+position = Vector2(11, 27)
 
 [node name="CollisionShape2D" parent="Checkpoints/Checkpoint/PlayerDetectionArea" parent_id_path=PackedInt32Array(1014506818, 1887398463) index="0" unique_id=1351115857]
 position = Vector2(50, 32)
 
 [node name="Checkpoint2" parent="Checkpoints" index="1" unique_id=1693175137 instance=ExtResource("3_j5gp6")]
-position = Vector2(164, 0)
+position = Vector2(147, 0)
+nb_sim_enemies = 3
 
 [node name="ThugEnemy" parent="Checkpoints/Checkpoint2/Enemies" parent_id_path=PackedInt32Array(1693175137, 905483792) index="0" unique_id=740552262 instance=ExtResource("5_2j5k0")]
 position = Vector2(87, 16)
@@ -48,6 +63,18 @@ position = Vector2(-33, 78)
 
 [node name="CollisionShape2D" parent="Checkpoints/Checkpoint2/PlayerDetectionArea" parent_id_path=PackedInt32Array(1693175137, 1887398463) index="0" unique_id=1351115857]
 position = Vector2(50, 32)
+
+[node name="Barrel" parent="Containers" parent_id_path=PackedInt32Array(2024749787) index="0" unique_id=514616866 instance=ExtResource("6_mslao")]
+position = Vector2(72, 47)
+content_type = 2
+
+[node name="Barrel2" parent="Containers" parent_id_path=PackedInt32Array(2024749787) index="1" unique_id=1913273148 instance=ExtResource("6_mslao")]
+position = Vector2(224, 42)
+content_type = 1
+
+[node name="Door" parent="Doors" parent_id_path=PackedInt32Array(1121313443) index="0" unique_id=1740204300 node_paths=PackedStringArray("enemies") instance=ExtResource("8_ea7xw")]
+position = Vector2(174, 32)
+enemies = [NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy"), NodePath("../../Checkpoints/Checkpoint/Enemies/BasicEnemy2")]
 
 [editable path="Checkpoints/Checkpoint"]
 [editable path="Checkpoints/Checkpoint2"]

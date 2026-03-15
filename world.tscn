@@ -15,6 +15,7 @@ script = ExtResource("1_tlwt5")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1095373772]
 position = Vector2(50, 32)
+position_smoothing_speed = 100.0
 
 [node name="InvisibleWalls" type="Node2D" parent="Camera" unique_id=1450202878]
 position = Vector2(-50, -32)
@@ -44,3 +45,5 @@ player = NodePath("Player")
 
 [node name="Player" parent="ActorsContainer" unique_id=1851513608 instance=ExtResource("2_fj7yv")]
 position = Vector2(35, 36)
+has_gun = true
+max_ammo_per_gun = 10

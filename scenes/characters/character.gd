@@ -34,7 +34,7 @@ const GRAVITY := 600.0
 @onready var collectiblesensor: Area2D = $Collectiblesensor
 @onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
-enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER}
+enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER, DROP, WAIT, APPEARING}
 enum Type {PLAYER, PUNK, GOON, THUG, BOUNCER}
 
 var ammo_left := 0
@@ -57,6 +57,9 @@ var anim_map : Dictionary = {
 	State.SHOOT: "shoot",
 	State.PREP_SHOOT: "idle",
 	State.RECOVER: "recover",
+	State.DROP: "idle",
+	State.WAIT: "idle",
+	State.APPEARING : "idle",
 }
 
 var attack_combo_index := 0
@@ -75,6 +78,7 @@ func _ready() -> void:
 	collateral_damage_emitter.area_entered.connect(on_emit_collateral_damage.bind())
 	collateral_damage_emitter.body_entered.connect(on_wall_hit)
 	current_health = max_health
+	set_sprite_height()
 
 func _process(delta: float) -> void:
 	handle_input()
@@ -88,16 +92,25 @@ func _process(delta: float) -> void:
 	handle_death(delta)
 	set_heading()
 	flip_sprites()
+	set_sprite_visibility()
+	set_sprite_height()
+	setup_collisions()
+	move_and_slide()
+
+func set_sprite_visibility() -> void:
 	knife_sprite.visible = has_knife
 	gun_sprite.visible = has_gun
+
+func set_sprite_height() -> void:
 	character_sprite.position = Vector2.UP * height
 	knife_sprite.position = Vector2.UP * height
 	gun_sprite.position = Vector2.UP * height
+
+func setup_collisions() -> void:
 	collision_shape_2d.disabled = is_collision_disabled()
 	damage_emitter.monitoring = is_attacking()
 	damage_receiver.monitorable = can_get_hurt()
 	collateral_damage_emitter.monitoring = state == State.FLY
-	move_and_slide()
 
 func handle_input() -> void:
 	pass
@@ -140,7 +153,7 @@ func handle_animation() -> void:
 		animation_player.play(anim_map[state])
 
 func handle_air_time(delta : float) -> void:
-	if [State.JUMP, State.JUMPKICK, State.FALL].has(state):
+	if [State.JUMP, State.JUMPKICK, State.FALL, State.DROP].has(state):
 		height += height_speed * delta
 		if height < 0:
 			height = 0
@@ -194,6 +207,8 @@ func is_carrying_weapon() -> bool:
 func can_pickup_collectible() -> bool:
 	if can_respawn_knives:
 		return false
+	if Time.get_ticks_msec() - time_since_knife_dismiss < duration_between_knives_respawn:
+		return false
 	var collectible_areas := collectiblesensor.get_overlapping_areas()
 	if collectible_areas.size() == 0:
 		return false
@@ -245,8 +260,8 @@ func on_throw_complete() -> void:
 		collectible_type = Collectible.Type.GUN
 		has_gun = false
 	else:
+		collectible_type = Collectible.Type.KNIFE
 		has_knife = false
-	has_knife = false
 	var collectible_global_position := Vector2(weapon_position.global_position.x, global_position.y)
 	var collectible_height := -weapon_position.position.y
 	EntityManager.spawn_collectible.emit(collectible_type, Collectible.State.FLY, collectible_global_position, heading, collectible_height, false)

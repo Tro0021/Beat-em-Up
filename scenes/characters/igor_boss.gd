@@ -48,7 +48,7 @@ func handle_input() -> void:
 			else:
 				var target_destination := get_target_destination()
 				var direction := (target_destination - position).normalized()
-				velocity = (direction * knockback_force) * speed
+				velocity = direction * speed + knockback_force
 				state = State.WALK
 
 func on_action_complete() -> void:

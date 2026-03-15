@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	if not camera_locked and player.position.x > camera.position.x:
-		camera.position.x = player.position.x
+		camera.position.x = lerp(camera.position.x, player.position.x, 0.1)
 
 func on_checkpoint_start() -> void:
 	camera_locked = true
