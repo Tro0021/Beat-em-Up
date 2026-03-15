@@ -20,6 +20,7 @@ const GRAVITY := 600.0
 @export var max_ammo_per_gun : int
 @export var max_health : int
 @export var speed : float
+@export var type : Type
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var character_sprite: Sprite2D = $CharacterSprite
@@ -34,6 +35,7 @@ const GRAVITY := 600.0
 @onready var weapon_position: Node2D = $KnifeSprite/WeaponPosition
 
 enum State {IDLE, WALK, ATTACK, TAKEOFF, JUMP, LAND, JUMPKICK, HURT, FALL, GROUNDED, DEATH, FLY, PREP_ATTACK, THROW, PICKUP, SHOOT, PREP_SHOOT, RECOVER}
+enum Type {PLAYER, PUNK, GOON, THUG, BOUNCER}
 
 var ammo_left := 0
 var anim_attacks := []

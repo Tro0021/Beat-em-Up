@@ -9,6 +9,7 @@ duration_between_range_attack = 2500
 damage = 3
 duration_grounded = 1300.0
 has_gun = true
+type = 3
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1423007912]
 texture = ExtResource("2_0vkad")

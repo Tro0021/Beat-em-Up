@@ -5,14 +5,15 @@
 
 [node name="GoonEnemy" unique_id=1851513608 instance=ExtResource("1_55rrx")]
 can_respawn_knives = true
-max_health = 18
 damage = 1
-speed = 28.0
-knockdown_intensity = 80.0
-duration_grounded = 700.0
 duration_between_knives_respawn = 1000
+duration_grounded = 700.0
 flight_speed = 120.0
 has_knife = true
+knockdown_intensity = 80.0
+max_health = 18
+speed = 28.0
+type = 2
 
 [node name="CharacterSprite" parent="." index="1" unique_id=1423007912]
 texture = ExtResource("2_jdxqa")
